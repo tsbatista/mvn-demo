@@ -5,9 +5,14 @@
     <groupId>pt.tsbatista</groupId>
     <artifactId>mvn-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <name>mvn-demo</name>
+    
+    <modules>
+        <module>web</module>
+        <module>business</module>
+    </modules>
     
     <url>http://maven.apache.org</url>
     <build>
@@ -50,6 +55,11 @@
                     <configuration>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
                 </plugin>
             
                 <plugin>
