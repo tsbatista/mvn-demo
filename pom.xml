@@ -15,50 +15,151 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
             </plugin>
             <plugin>
-                <!-- missing version on purpose -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
             </plugin>
-            
+        
+            <!-- this will likely fail server side even after guaranteeed dependency convergence -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.3.1</version>
-                <executions>
-                    <execution>
-                        <id>enforce-versions</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <rules>
-                        <DependencyConvergence />
-                        <requireMavenVersion>
-                            <version>[3.0.4,)</version>
-                            <message>[ERROR] This project requires Maven 3.0.4 or higher</message>
-                        </requireMavenVersion>
-                    </rules>
-                </configuration>
             </plugin>
             
         </plugins>
+        
+        <!-- put all thje configurations here, then just declare the plugin's usage on the <plugins> section -->
+        <pluginManagement>
+            <plugins>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+            
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>1.3.1</version>
+                    <executions>
+                        <execution>
+                            <id>enforce-versions</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <rules>
+                            <requirePluginVersions >
+                                <unCheckedPluginList>
+                                    org.apache.maven.plugins:maven-clean-plugin,
+                                    org.apache.maven.plugins:maven-deploy-plugin,
+                                    org.apache.maven.plugins:maven-install-plugin,
+                                    org.apache.maven.plugins:maven-surefire-plugin,
+                                    org.apache.maven.plugins:maven-site-plugin
+                                </unCheckedPluginList>
+                            </requirePluginVersions>
+                            <DependencyConvergence />
+                            <requireMavenVersion>
+                                <version>[3.0.4,)</version>
+                                <message>[ERROR] This project requires Maven 3.0.4 or higher</message>
+                            </requireMavenVersion>
+                        </rules>
+                    </configuration>
+                </plugin>
+                
+                <!-- add any plugins that may influence the final artifact here -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
+    
+    <dependencyManagement>
+        <dependencies>
+            <!-- add all the direct dependencies to management and remove explicit versions below -->
+            <dependency>
+                <groupId>org.opensaml</groupId>
+                <artifactId>opensaml</artifactId>
+                <version>2.6.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-server</artifactId>
+                <version>2.3.1</version>
+            </dependency>
+                
+                
+            <dependency>        
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>6.8.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.0.13</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+        
+            <!-- now lets look at the output of the enforcer plugin and make sure all collisions are managed as well -->
+            <!-- when in doubt try the latest version mentioned by the plugin... be very carefull about what you put here-->
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.7</version>
+            </dependency>
+        
+        </dependencies>
+    </dependencyManagement>
+    
 
     <dependencies>
         <!-- lets try to pull in multiple instances of some dependencies! -->
