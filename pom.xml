@@ -8,12 +8,12 @@
     <packaging>pom</packaging>
 
     <name>mvn-demo</name>
-    
+
     <modules>
         <module>web</module>
         <module>business</module>
     </modules>
-    
+
     <url>http://maven.apache.org</url>
     <build>
         <plugins>
@@ -25,19 +25,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
             </plugin>
-        
+
             <!-- this will likely fail server side even after guaranteeed dependency convergence -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
-            
+
         </plugins>
-        
+
         <!-- put all thje configurations here, then just declare the plugin's usage on the <plugins> section -->
         <pluginManagement>
             <plugins>
-                
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -47,7 +47,7 @@
                         <target>1.7</target>
                     </configuration>
                 </plugin>
-                
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
@@ -56,12 +56,41 @@
                         <failOnMissingWebXml>false</failOnMissingWebXml>
                     </configuration>
                 </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>2.4</version>
                 </plugin>
-            
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadoc</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
@@ -94,7 +123,7 @@
                         </rules>
                     </configuration>
                 </plugin>
-                
+
                 <!-- add any plugins that may influence the final artifact here -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -107,8 +136,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
-    
+
+
     <dependencyManagement>
         <dependencies>
             <!-- add all the direct dependencies to management and remove explicit versions below -->
@@ -122,9 +151,9 @@
                 <artifactId>jersey-server</artifactId>
                 <version>2.3.1</version>
             </dependency>
-                
-                
-            <dependency>        
+
+
+            <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
                 <version>6.8.1</version>
@@ -148,7 +177,7 @@
                 <version>3.0.1</version>
                 <scope>provided</scope>
             </dependency>
-        
+
             <!-- now lets look at the output of the enforcer plugin and make sure all collisions are managed as well -->
             <!-- when in doubt try the latest version mentioned by the plugin... be very carefull about what you put here-->
             <dependency>
@@ -166,10 +195,10 @@
                 <artifactId>commons-codec</artifactId>
                 <version>1.7</version>
             </dependency>
-        
+
         </dependencies>
     </dependencyManagement>
-    
+
 
     <dependencies>
         <!-- lets try to pull in multiple instances of some dependencies! -->
@@ -183,9 +212,9 @@
             <artifactId>jersey-server</artifactId>
             <version>2.3.1</version>
         </dependency>
-                
-                
-        <dependency>        
+
+
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.8.1</version>

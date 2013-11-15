@@ -7,26 +7,34 @@
         <artifactId>mvn-demo</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    
+
     <artifactId>mvn-demo-business</artifactId>
     <packaging>jar</packaging>
 
     <name>mvn-demo-business</name>
-    
-    
+
+
     <build>
         <plugins>
             <!-- here you will get the compiler and jar plugins by default -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-            </plugin>        
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
-    
+
 
     <dependencies>
-        <dependency>        
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <scope>test</scope>
