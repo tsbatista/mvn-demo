@@ -64,25 +64,6 @@
                     <version>2.4</version>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-pmd-plugin</artifactId>
-                    <version>3.0.1</version>
-                    <configuration>
-                        <linkXref>true</linkXref>
-                        <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
-                        <minimumTokens>100</minimumTokens>
-                        <targetJdk>1.7</targetJdk>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>check</goal>
-                                <goal>cpd-check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -114,35 +95,14 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.0.1</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>1.3.1</version>
-                    <executions>
-                        <execution>
-                            <id>enforce-versions</id>
-                            <phase>validate</phase>
-                            <goals>
-                                <goal>enforce</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <rules>
-                            <requirePluginVersions >
-                                <unCheckedPluginList>
-                                    org.apache.maven.plugins:maven-clean-plugin,
-                                    org.apache.maven.plugins:maven-deploy-plugin,
-                                    org.apache.maven.plugins:maven-install-plugin,
-                                    org.apache.maven.plugins:maven-surefire-plugin,
-                                    org.apache.maven.plugins:maven-site-plugin
-                                </unCheckedPluginList>
-                            </requirePluginVersions>
-                            <DependencyConvergence />
-                            <requireMavenVersion>
-                                <version>[3.0.4,)</version>
-                                <message>[ERROR] This project requires Maven 3.0.4 or higher</message>
-                            </requireMavenVersion>
-                        </rules>
-                    </configuration>
                 </plugin>
 
                 <!-- add any plugins that may influence the final artifact here -->
@@ -154,6 +114,76 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>pedantic</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-pmd-plugin</artifactId>
+                            <version>3.0.1</version>
+                            <configuration>
+                                <linkXref>true</linkXref>
+                                <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+                                <minimumTokens>100</minimumTokens>
+                                <targetJdk>1.7</targetJdk>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>check</goal>
+                                        <goal>cpd-check</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-enforcer-plugin</artifactId>
+                            <version>1.3.1</version>
+                            <executions>
+                                <execution>
+                                    <id>enforce-versions</id>
+                                    <phase>validate</phase>
+                                    <goals>
+                                        <goal>enforce</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <rules>
+                                    <requirePluginVersions >
+                                        <unCheckedPluginList>
+                                            org.apache.maven.plugins:maven-clean-plugin,
+                                            org.apache.maven.plugins:maven-deploy-plugin,
+                                            org.apache.maven.plugins:maven-install-plugin,
+                                            org.apache.maven.plugins:maven-surefire-plugin,
+                                            org.apache.maven.plugins:maven-site-plugin
+                                        </unCheckedPluginList>
+                                    </requirePluginVersions>
+                                    <DependencyConvergence />
+                                    <requireMavenVersion>
+                                        <version>[3.0.4,)</version>
+                                        <message>[ERROR] This project requires Maven 3.0.4 or higher</message>
+                                    </requireMavenVersion>
+                                </rules>
+                            </configuration>
+                        </plugin>
+
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
