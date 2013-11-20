@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "AdditionServlet", urlPatterns = {"/add"})
 public class AdditionServlet extends HttpServlet {
 
+    //lets introduce a checkstyle warning..
+    public static String MESSAGE2_IS_A_VERY_LONG_NAME = "Hello";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,7 +48,8 @@ public class AdditionServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CalculatorServlet at " + request.getContextPath() + "</h1>");
-            out.println(oper1 + " + " + oper2 + " = " + result);
+            out.println(oper1 + " + " + oper2 + " = " + result + "<br />");
+            out.println("this shuld generate a warning I hope... " + MESSAGE2_IS_A_VERY_LONG_NAME);
             out.println("</body>");
             out.println("</html>");
         }
