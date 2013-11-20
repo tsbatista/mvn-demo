@@ -17,23 +17,6 @@
     <url>http://maven.apache.org</url>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-            </plugin>
-
-            <!-- this will likely fail server side even after guaranteeed dependency convergence -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-            </plugin>
-
-        </plugins>
 
         <!-- put all thje configurations here, then just declare the plugin's usage on the <plugins> section -->
         <pluginManagement>
